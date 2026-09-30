@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Acordul părintelui · Revivo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<h1>Acordul părintelui</h1>
+<p>Te ducem la pagina de acord… Dacă nu se întâmplă nimic, deschide din nou linkul din email.</p>
+<p lang="en">Taking you to the consent page… If nothing happens, open the link in the email again.</p>
+</main>
+<script>
+  // The email link carries a one-time token; the page itself is served by
+  // the parentConsentPage Cloud Function (functions/src/legal.ts).
+  var q = location.search;
+  if (/[?&][tm]=/.test(q)) location.replace('https://us-central1-revivo-recovery-app.cloudfunctions.net/parentConsentPage' + q);
+</script>
+</body>
+</html>
