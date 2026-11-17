@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Revivo</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+  .invite { text-align: center; padding-top: 32px; }
+  .invite .code { font: 800 34px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 3px; margin: 8px 0 24px; }
+  .invite .btn { display: block; max-width: 340px; margin: 0 auto 12px; padding: 15px 18px; border-radius: 14px;
+    font-weight: 700; font-size: 17px; text-decoration: none; background: var(--accent); color: #fff; }
+  .invite .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--line); }
+  .invite .note { color: var(--muted); font-size: 14px; max-width: 360px; margin: 16px auto 0; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main class="invite">
+  <!-- A friend's QR code or link, revivo.training/i/CODE, opened without the
+       app (lib/accreditation/accreditation_logic.dart friendCodeLink). With
+       the app installed the phone opens the app instead and this page never
+       shows. GitHub Pages serves this file for every address it has no page
+       for, so the code is read from the address; anything else is a plain
+       "not found". No cookies, nothing loaded from elsewhere. -->
+  <section id="invite" hidden>
+    <h1 id="title">Add me on Revivo</h1>
+    <div class="code" id="code"></div>
+    <a class="btn" id="open" href="#">Open Revivo</a>
+    <a class="btn ghost" id="play" href="#">Get Revivo on Google Play</a>
+    <p class="note" id="note">Once Revivo is installed, it opens on your friend. One tap on Add friend and they get your request.</p>
+  </section>
+  <section id="missing" hidden>
+    <h1 id="missing-title">Page not found</h1>
+    <p><a href="/" id="home">Revivo</a></p>
+  </section>
+</main>
+<script>
+(function () {
+  var ALPHABET = /^[23456789ABCDEFGHJKMNPQRSTUVWXYZ]{6}$/;
+  var m = location.pathname.match(/^\/i\/([^/]*)\/?$/i);
+  var code = ((m && m[1]) || new URLSearchParams(location.search).get('c') || '').toUpperCase();
+  var ro = /^ro\b/i.test(navigator.language || '');
+  var text = ro ? {
+    title: 'Adaugă-mă pe Revivo', open: 'Deschide Revivo', play: 'Ia Revivo din Google Play',
+    note: 'După ce instalezi Revivo, se deschide la prietenul tău. O atingere pe Adaugă la prieteni și primește cererea ta.',
+    missing: 'Pagina nu există'
+  } : {
+    title: 'Add me on Revivo', open: 'Open Revivo', play: 'Get Revivo on Google Play',
+    note: 'Once Revivo is installed, it opens on your friend. One tap on Add friend and they get your request.',
+    missing: 'Page not found'
+  };
+  if (ro) document.documentElement.lang = 'ro';
+  if (!m && !/^\/i\/?$/i.test(location.pathname) || !ALPHABET.test(code)) {
+    document.getElementById('missing-title').textContent = text.missing;
+    document.getElementById('missing').hidden = false;
+    return;
+  }
+  // The store carries the code through the install (Play's install
+  // referrer, lib/services/friend_links.dart).
+  var play = 'https://play.google.com/store/apps/details?id=training.revivo&referrer=' +
+      encodeURIComponent('friend=' + code);
+  var app = 'revivo://revivo.training/i/' + code;
+  var android = /Android/i.test(navigator.userAgent);
+  document.title = text.title + ' · Revivo';
+  document.getElementById('title').textContent = text.title;
+  document.getElementById('code').textContent = 'RV-' + code;
+  var open = document.getElementById('open');
+  open.textContent = text.open;
+  // On Android one button does both: the app if it is there, the store if not.
+  open.href = android
+      ? 'intent://revivo.training/i/' + code + '#Intent;scheme=revivo;package=training.revivo;S.browser_fallback_url=' +
+        encodeURIComponent(play) + ';end'
+      : app;
+  var store = document.getElementById('play');
+  store.textContent = text.play;
+  store.href = play;
+  document.getElementById('note').textContent = text.note;
+  document.getElementById('invite').hidden = false;
+})();
+</script>
+</body>
+</html>

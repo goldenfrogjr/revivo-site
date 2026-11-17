@@ -1,0 +1,15 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "training.revivo",
+      "sha256_cert_fingerprints": [
+        "32:9B:26:68:A7:DB:87:EF:52:D9:F9:5A:74:CC:6C:A1:BF:71:8A:C4:ED:2F:F0:D9:80:C6:9C:2B:EA:70:EB:DA",
+        "A3:33:D5:1A:E2:A7:B9:D5:30:F9:80:0B:AA:3A:22:46:D0:B9:5C:6B:F5:60:60:0B:49:A3:A3:80:3B:38:DD:B3",
+        "10:68:EF:ED:CB:7A:F8:81:97:2F:F9:53:69:8B:8E:50:76:3E:E6:5A:97:90:71:2D:16:41:36:A0:C8:36:19:3C",
+        "E6:D4:2F:B6:67:18:98:11:D7:B1:71:9B:C9:23:1D:D2:B8:BD:E5:36:22:89:FC:AA:CF:C1:D9:A1:9D:85:F0:A7"
+      ]
+    }
+  }
+]
